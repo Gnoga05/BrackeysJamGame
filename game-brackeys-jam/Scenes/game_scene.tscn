@@ -1,3 +1,16 @@
-[gd_scene format=3 uid="uid://ct2tvtqia7jpl"]
+[gd_scene load_steps=3 format=3 uid="uid://ct2tvtqia7jpl"]
+
+[ext_resource type="PackedScene" uid="uid://cu75qyperduxj" path="res://Scenes/Levels/level_1.tscn" id="1_x87qo"]
+[ext_resource type="PackedScene" uid="uid://dimwcchxbkrbq" path="res://Scenes/Characters/player.tscn" id="2_b6fju"]
 
 [node name="GameScene" type="Node2D"]
+
+[node name="Level" type="Node2D" parent="."]
+
+[node name="Level1" parent="Level" instance=ExtResource("1_x87qo")]
+
+[node name="Objects" type="Node" parent="."]
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("2_b6fju")]

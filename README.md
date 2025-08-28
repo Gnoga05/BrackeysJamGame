@@ -1,5 +1,5 @@
-When uploading your changes, make sure to do git push origin <name-of-contribution> 
+When uploading your changes, make sure to do "git push origin < name-of-contribution >" 
 
 For example:
-Programmers: player-movement, enemy-ai, etc.
-Artists/Designers: art-assets, level-design, etc.
+\nProgrammers: player-movement, enemy-ai, etc.
+\nArtists/Designers: art-assets, level-design, etc.

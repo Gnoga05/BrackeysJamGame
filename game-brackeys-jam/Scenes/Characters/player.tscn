@@ -13,7 +13,7 @@ height = 18.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3etf2"]
 size = Vector2(28, 20)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_y0qk3")
 
 [node name="Mesh" type="MeshInstance2D" parent="."]

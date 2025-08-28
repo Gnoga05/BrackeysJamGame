@@ -28,6 +28,7 @@ sources/0 = SubResource("TileSetAtlasSource_3mqfk")
 position = Vector2(-100, 54)
 
 [node name="TempBackground" type="MeshInstance2D" parent="."]
+visible = false
 position = Vector2(0, 72)
 scale = Vector2(1168.5, 825.5)
 mesh = SubResource("QuadMesh_4dpyx")

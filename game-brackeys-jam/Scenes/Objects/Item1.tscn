@@ -1,3 +1,17 @@
-[gd_scene format=3 uid="uid://dl6eddo12o5ua"]
+[gd_scene load_steps=3 format=3 uid="uid://dl6eddo12o5ua"]
 
-[node name="Item1" type="Node2D" groups=["Item"]]
+[ext_resource type="Texture2D" uid="uid://c4dobbibcqujf" path="res://ImportedAssets/Itemcardattack.webp" id="1_y3ahd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_npm3x"]
+size = Vector2(210, 339)
+
+[node name="ItemAttack" type="Node2D" groups=["Item"]]
+
+[node name="CardAT" type="Sprite2D" parent="."]
+texture = ExtResource("1_y3ahd")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1, -0.5)
+shape = SubResource("RectangleShape2D_npm3x")

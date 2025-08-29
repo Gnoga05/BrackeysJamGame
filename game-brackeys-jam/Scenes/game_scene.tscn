@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ct2tvtqia7jpl"]
+[gd_scene load_steps=6 format=3 uid="uid://ct2tvtqia7jpl"]
 
 [ext_resource type="PackedScene" uid="uid://cu75qyperduxj" path="res://Scenes/Levels/level_1.tscn" id="1_x87qo"]
 [ext_resource type="PackedScene" uid="uid://d4i5ukpt4mqw6" path="res://Scenes/Characters/enemy.tscn" id="2_6h5vk"]
 [ext_resource type="PackedScene" uid="uid://dimwcchxbkrbq" path="res://Scenes/Characters/player.tscn" id="2_b6fju"]
 [ext_resource type="PackedScene" uid="uid://dl6eddo12o5ua" path="res://Scenes/Objects/Item1.tscn" id="2_fiftr"]
+[ext_resource type="Script" uid="uid://yjpeytgo3nls" path="res://Scenes/Objects/card.gd" id="3_1ixah"]
 
 [node name="GameScene" type="Node2D"]
 
@@ -17,6 +18,7 @@ position = Vector2(-1, 0)
 [node name="ItemAttack" parent="Objects" instance=ExtResource("2_fiftr")]
 position = Vector2(249, -59)
 scale = Vector2(0.1, 0.1)
+script = ExtResource("3_1ixah")
 
 [node name="Enemies" type="Node" parent="."]
 

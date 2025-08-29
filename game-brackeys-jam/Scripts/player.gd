@@ -4,6 +4,10 @@ var SPEED = 125
 const JUMP_VELOCITY = -300
 var jump_value: float = 0
 var was_on_floor: bool
+var max_health: int = 6
+var health : int = max_health
+var attack: int = 2
+var defense: int = 2
 
 var enemy: Enemy
 
@@ -110,3 +114,7 @@ func _on_temp_timer_timeout():
 	steal_countdown.set_text("")
 	steal_countdown.hide()
 	temp_timer.queue_free()
+
+func increase_attack(amount: int) -> void:
+	attack += amount
+	print("Tu ataque aumentó en ", amount, ". Ahora es: ", attack)

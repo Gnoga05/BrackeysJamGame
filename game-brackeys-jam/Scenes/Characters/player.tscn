@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dimwcchxbkrbq"]
+[gd_scene load_steps=6 format=3 uid="uid://dimwcchxbkrbq"]
 
 [ext_resource type="Script" uid="uid://c4ftaj1bq40of" path="res://Scripts/player.gd" id="1_y0qk3"]
+[ext_resource type="FontFile" uid="uid://bf274bp67p38k" path="res://ImportedAssets/VCR_OSD_MONO_1.001.ttf" id="2_40svl"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_3etf2"]
 radius = 0.25
@@ -26,10 +27,82 @@ shape = SubResource("CapsuleShape2D_y0qk3")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.05
+drag_top_margin = 0.1
+drag_right_margin = 0.05
+drag_bottom_margin = 0.1
 
 [node name="Detection" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detection"]
 shape = SubResource("RectangleShape2D_3etf2")
 
-[connection signal="area_entered" from="Detection" to="." method="_on_detection"]
+[node name="StepUp" type="RayCast2D" parent="."]
+position = Vector2(6, 5)
+target_position = Vector2(0, 5)
+
+[node name="StealGUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -45.0
+offset_right = 20.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="StealGUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="StealText" type="Label" parent="StealGUI/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_40svl")
+theme_override_font_sizes/font_size = 12
+text = "STEAL"
+horizontal_alignment = 1
+
+[node name="StealCountdown" type="Label" parent="StealGUI/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_40svl")
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+
+[node name="JumpBuffer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+
+[node name="StealTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="body_entered" from="Detection" to="." method="_on_detection"]
+[connection signal="body_exited" from="Detection" to="." method="_on_detection_exited"]
+[connection signal="timeout" from="JumpBuffer" to="." method="_on_jump_buffer_timeout"]
+[connection signal="timeout" from="StealTimer" to="." method="_on_steal_timeout"]

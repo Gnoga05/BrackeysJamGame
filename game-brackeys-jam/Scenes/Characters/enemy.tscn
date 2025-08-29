@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://d4i5ukpt4mqw6"]
 
-[ext_resource type="Script" uid="uid://e726fef5bs4k" path="res://Scenes/Characters/enemy.gd" id="1_lsx3x"]
+[ext_resource type="Script" uid="uid://e726fef5bs4k" path="res://Scripts/enemy.gd" id="1_lsx3x"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_j51ow"]
 radius = 0.25
@@ -13,7 +13,7 @@ height = 18.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b1c4r"]
 size = Vector2(146, 10)
 
-[node name="Enemy" type="CharacterBody2D"]
+[node name="Enemy" type="CharacterBody2D" groups=["Enemy"]]
 script = ExtResource("1_lsx3x")
 
 [node name="Mesh" type="MeshInstance2D" parent="."]

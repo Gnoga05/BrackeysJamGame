@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=4 uid="uid://cu75qyperduxj"]
 
 [ext_resource type="Texture2D" uid="uid://cf1hatdph5081" path="res://icon.svg" id="1_tlcug"]
-[ext_resource type="Texture2D" uid="uid://di7u3k1ee4xhj" path="res://TempTileset.png" id="2_4dpyx"]
+[ext_resource type="Texture2D" uid="uid://di7u3k1ee4xhj" path="res://ImportedAssets/TempTileset.png" id="2_4dpyx"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_4dpyx"]
 

@@ -1,4 +1,4 @@
-extends CharacterBody2D
+class_name Enemy extends CharacterBody2D
 
 @export var speed: float = 80.0
 @export var pause_time: float = 1.5
@@ -8,12 +8,18 @@ extends CharacterBody2D
 @export var min_x: float = 0.0
 @export var max_x: float = 200.0
 
+@onready var ground_check: RayCast2D = $GroundCheck
+@onready var vision_area: Area2D = $VisionArea
+
 var direction: int = 1
 var is_paused: bool = false
 var pause_timer: float = 0.0
 
-@onready var ground_check: RayCast2D = $GroundCheck
-@onready var vision_area: Area2D = $VisionArea
+
+var potential_loot: Dictionary = {"Item1": .10, "Item2": .30, "Item3": .40, "Nothing": .20}
+var has_been_looted: bool = false
+
+
 
 func _ready() -> void:
 	vision_area.body_entered.connect(_on_body_entered)
@@ -41,6 +47,22 @@ func _start_pause() -> void:
 	velocity.x = 0
 	
 
+func generate_loot() -> String:
+	var rand_value = randf()
+	var cumulative = 0.0
+	
+	for item in potential_loot.keys():
+		cumulative += potential_loot[item]
+		if rand_value <= cumulative:
+			has_been_looted = true
+			return item
+	
+	has_been_looted = true
+	return potential_loot.keys()[0] 
+
+
+
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
 		print("player found")
+		

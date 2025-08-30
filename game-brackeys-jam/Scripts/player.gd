@@ -4,6 +4,7 @@ var SPEED = 125
 const JUMP_VELOCITY = -300
 var jump_value: float = 0
 var was_on_floor: bool
+
 var max_health: int = 6
 var health : int = max_health
 var attack: int = 2
@@ -18,8 +19,11 @@ var temp_timer: Timer
 @onready var jump_buffer: Timer = $JumpBuffer
 @onready var coyote_timer: Timer = $CoyoteTimer
 @onready var steal_timer: Timer = $StealTimer
-@onready var steal_text: Label = $StealGUI/VBoxContainer/StealText
-@onready var steal_countdown: Label = $StealGUI/VBoxContainer/StealCountdown
+@onready var steal_text: Label = $GUI/VBoxContainer/StealText
+@onready var steal_countdown: Label = $GUI/VBoxContainer/StealCountdown
+@onready var pickup_label: Label = $GUI/PickupLabel
+@onready var stats_label: Label = $CanvasLayer/Control/StatsLabel
+
 
 
 func get_input():
@@ -56,7 +60,7 @@ func _physics_process(delta: float) -> void:
 			
 			if Input.is_action_just_pressed("interact"):
 				steal_timer.start()
-			if Input.is_action_just_released("interact"):
+			if Input.is_action_just_released("interact") or not steal_text.is_visible_in_tree():
 				steal_timer.stop()
 				steal_countdown.set_text("")
 	else:
@@ -83,20 +87,41 @@ func _on_jump_buffer_timeout() -> void:
 		velocity.y = JUMP_VELOCITY
 
 
-func _on_detection(body: Node2D) -> void:
+func _on_body_detection(body: Node2D) -> void:
 	if body.is_in_group("Enemy"):
 		enemy = body
 		
-	if body.is_in_group("Item"):
-		for item in inventory:
-			if body.type == item:
-				inventory[item] += 1
-				break
-				#I will work on this tomorrow
 
-func _on_detection_exited(body: Node2D) -> void:
+
+func _on_body_detection_exited(body: Node2D) -> void:
 		if body.is_in_group("Enemy"):
 			enemy = null
+			
+
+func _on_area_detection(area: Area2D) -> void:
+	var obj = area.get_parent()
+	if obj.is_in_group("Item"):
+		var item = obj
+		if item.TYPE == "attack":
+			attack += item.BUFF_AMOUNT
+			pickup_label.set_text("+" + str(item.BUFF_AMOUNT) + " attack damage!")
+			pickup_label.show()
+			create_temp_timer(2.0)
+			stats_label.set_text("Attack: " + str(attack) + "\nDefense: " + str(defense))
+			
+		elif item.TYPE == "defense":
+			defense += item.BUFF_AMOUNT
+			pickup_label.set_text("+" + str(item.BUFF_AMOUNT) + " defense!")			
+			pickup_label.show()
+			create_temp_timer(2.0)
+			stats_label.set_text("Attack: " + str(attack) + "\nDefense: " + str(defense))
+		## Adding items to inventory if we want to add items that do more than boost stats
+		#for item in inventory:
+			#if obj.type == item:
+				#inventory[item] += 1
+				#break
+		obj.queue_free()
+
 
 func _on_steal_timeout() -> void:
 	var looted_item = enemy.generate_loot()
@@ -113,8 +138,6 @@ func _on_steal_timeout() -> void:
 func _on_temp_timer_timeout():
 	steal_countdown.set_text("")
 	steal_countdown.hide()
+	pickup_label.set_text("")
+	pickup_label.hide()
 	temp_timer.queue_free()
-
-func increase_attack(amount: int) -> void:
-	attack += amount
-	print("Tu ataque aumentó en ", amount, ". Ahora es: ", attack)

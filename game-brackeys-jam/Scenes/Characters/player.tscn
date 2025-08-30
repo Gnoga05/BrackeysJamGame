@@ -40,27 +40,17 @@ drag_bottom_margin = 0.1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detection"]
 shape = SubResource("RectangleShape2D_3etf2")
 
-[node name="StepUp" type="RayCast2D" parent="."]
-position = Vector2(6, 5)
-target_position = Vector2(0, 5)
-
-[node name="StealGUI" type="Control" parent="."]
+[node name="GUI" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -45.0
-offset_right = 20.0
-offset_bottom = -5.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="StealGUI"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -68,15 +58,15 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -20.0
-offset_top = -20.0
+offset_top = -43.315
 offset_right = 20.0
-offset_bottom = 20.0
+offset_bottom = -3.315
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="StealText" type="Label" parent="StealGUI/VBoxContainer"]
+[node name="StealText" type="Label" parent="GUI/VBoxContainer"]
 visible = false
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_40svl")
@@ -84,8 +74,25 @@ theme_override_font_sizes/font_size = 12
 text = "STEAL"
 horizontal_alignment = 1
 
-[node name="StealCountdown" type="Label" parent="StealGUI/VBoxContainer"]
+[node name="StealCountdown" type="Label" parent="GUI/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_40svl")
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+
+[node name="PickupLabel" type="Label" parent="GUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -28.62
+offset_right = 20.0
+offset_bottom = -5.62
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_40svl")
 theme_override_font_sizes/font_size = 12
 horizontal_alignment = 1
@@ -102,7 +109,25 @@ one_shot = true
 wait_time = 3.0
 one_shot = true
 
-[connection signal="body_entered" from="Detection" to="." method="_on_detection"]
-[connection signal="body_exited" from="Detection" to="." method="_on_detection_exited"]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="StatsLabel" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 1
+offset_right = 71.0
+offset_bottom = 25.0
+theme_override_fonts/font = ExtResource("2_40svl")
+theme_override_font_sizes/font_size = 24
+text = "Attack: 2
+Defense: 2"
+
+[connection signal="area_entered" from="Detection" to="." method="_on_area_detection"]
+[connection signal="body_entered" from="Detection" to="." method="_on_body_detection"]
+[connection signal="body_exited" from="Detection" to="." method="_on_body_detection_exited"]
 [connection signal="timeout" from="JumpBuffer" to="." method="_on_jump_buffer_timeout"]
 [connection signal="timeout" from="StealTimer" to="." method="_on_steal_timeout"]

@@ -147,4 +147,7 @@ func _on_temp_timer_timeout():
 func increase_attack(amount: int) -> void:
 	attack += amount
 	print("your attack increased ")
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

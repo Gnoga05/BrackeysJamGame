@@ -141,13 +141,7 @@ func _on_temp_timer_timeout():
 	pickup_label.set_text("")
 	pickup_label.hide()
 	temp_timer.queue_free()
-<<<<<<< Updated upstream
-=======
 
 func increase_attack(amount: int) -> void:
 	attack += amount
 	print("your attack increased ")
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes

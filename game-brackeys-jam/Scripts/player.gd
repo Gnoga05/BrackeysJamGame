@@ -5,7 +5,7 @@ const JUMP_VELOCITY = -300
 var jump_value: float = 0
 var was_on_floor: bool
 
-var max_health: int = 6
+var max_health: int = 100
 var health : int = max_health
 var attack: int = 2
 var defense: int = 2
@@ -22,7 +22,8 @@ var temp_timer: Timer
 @onready var steal_text: Label = $GUI/VBoxContainer/StealText
 @onready var steal_countdown: Label = $GUI/VBoxContainer/StealCountdown
 @onready var pickup_label: Label = $GUI/PickupLabel
-@onready var stats_label: Label = $CanvasLayer/Control/StatsLabel
+@onready var stats_label: Label = $CanvasLayer/Control/VBoxContainer/StatsLabel
+@onready var health_label: Label = $CanvasLayer/Control/VBoxContainer/HealthLabel
 
 
 
@@ -68,9 +69,12 @@ func _physics_process(delta: float) -> void:
 		steal_countdown.set_text("")
 		steal_countdown.hide()
 			
-			
+	health_label.set_text("Health: " + str(health))
+	
 	was_on_floor = is_on_floor()
 	move_and_slide()
+	
+	
 
 
 func create_temp_timer(time: float):

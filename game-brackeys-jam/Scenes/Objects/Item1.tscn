@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dl6eddo12o5ua"]
 
-[ext_resource type="Script" uid="uid://5cc2sfwth76u" path="res://Scripts/attack_item.gd" id="1_npm3x"]
+[ext_resource type="Script" uid="uid://yjpeytgo3nls" path="res://Scripts/card.gd" id="1_npm3x"]
 [ext_resource type="Texture2D" uid="uid://c4dobbibcqujf" path="res://ImportedAssets/Itemcardattack.webp" id="1_y3ahd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_npm3x"]
@@ -17,3 +17,5 @@ texture = ExtResource("1_y3ahd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_npm3x")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]

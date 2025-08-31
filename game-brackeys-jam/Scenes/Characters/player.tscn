@@ -117,14 +117,23 @@ anchors_preset = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="StatsLabel" type="Label" parent="CanvasLayer/Control"]
-layout_mode = 1
-offset_right = 71.0
-offset_bottom = 25.0
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="StatsLabel" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
 theme_override_fonts/font = ExtResource("2_40svl")
 theme_override_font_sizes/font_size = 24
 text = "Attack: 2
 Defense: 2"
+
+[node name="HealthLabel" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_40svl")
+theme_override_font_sizes/font_size = 24
+text = "Health:"
 
 [connection signal="body_entered" from="Detection" to="." method="_on_body_detection"]
 [connection signal="body_exited" from="Detection" to="." method="_on_body_detection_exited"]

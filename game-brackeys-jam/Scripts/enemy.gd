@@ -14,7 +14,7 @@ class_name Enemy extends CharacterBody2D
 var direction: int = 1
 var is_paused: bool = false
 var pause_timer: float = 0.0
-
+var attack_timer: float = 0.0
 
 var potential_loot: Dictionary = {"Item1": .10, "Item2": .30, "Item3": .40, "Nothing": .20}
 var has_been_looted: bool = false
@@ -24,10 +24,18 @@ var game: Node2D
 
 
 func _ready() -> void:
-	vision_area.body_entered.connect(_on_body_entered)
 	game = get_tree().root.get_node("GameScene")
 
 func _physics_process(delta: float) -> void:
+	if player:
+		attack_timer += delta
+		if attack_timer >= 2.0:
+			attack_timer = 0.0
+			player.health -= 2
+	else:
+		attack_timer = 0.0
+		
+	
 	if is_paused:
 		pause_timer -= delta
 		if pause_timer <= 0.0:
@@ -64,12 +72,14 @@ func generate_loot() -> String:
 	return potential_loot.keys()[0] 
 
 
-func _on_body_entered(body: Node) -> void:
+func _on_vision_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
 		player = body
-		
 
-		
+func _on_vision_exited(body: Node2D) -> void:
+	player = null
+
 
 func _on_grab_area_body_entered(body: Node2D) -> void:
-		game.start_combat(self)
+	pass
+	#game.start_combat(self)

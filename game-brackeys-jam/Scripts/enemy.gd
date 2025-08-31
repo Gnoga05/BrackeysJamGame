@@ -83,3 +83,5 @@ func _on_vision_exited(body: Node2D) -> void:
 func _on_grab_area_body_entered(body: Node2D) -> void:
 	pass
 	#game.start_combat(self)
+	
+	

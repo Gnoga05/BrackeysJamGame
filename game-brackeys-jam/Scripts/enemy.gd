@@ -1,7 +1,7 @@
 class_name Enemy extends CharacterBody2D
 
 @export var speed: float = 80.0
-@export var pause_time: float = 1.5
+@export var pause_time: float = 4.0
 @export var damage: int = 10
 
 # Patrol bounds
@@ -19,10 +19,13 @@ var pause_timer: float = 0.0
 var potential_loot: Dictionary = {"Item1": .10, "Item2": .30, "Item3": .40, "Nothing": .20}
 var has_been_looted: bool = false
 
+var player: CharacterBody2D
+var game: Node2D
 
 
 func _ready() -> void:
 	vision_area.body_entered.connect(_on_body_entered)
+	game = get_tree().root.get_node("GameScene")
 
 func _physics_process(delta: float) -> void:
 	if is_paused:
@@ -61,8 +64,12 @@ func generate_loot() -> String:
 	return potential_loot.keys()[0] 
 
 
-
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
-		print("player found")
+		player = body
 		
+
+		
+
+func _on_grab_area_body_entered(body: Node2D) -> void:
+		game.start_combat(self)

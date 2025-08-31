@@ -53,7 +53,7 @@ func _physics_process(delta: float) -> void:
 		if not enemy.has_been_looted:
 			steal_text.show()
 			steal_countdown.show()
-			if not steal_timer.is_stopped():
+			if not steal_timer.is_stopped(): 
 				steal_countdown.set_text(str(int(steal_timer.time_left+1)))
 			else:
 				steal_countdown.set_text("")
@@ -65,6 +65,7 @@ func _physics_process(delta: float) -> void:
 				steal_countdown.set_text("")
 	else:
 		steal_text.hide()
+		steal_countdown.set_text("")
 		steal_countdown.hide()
 			
 			
@@ -96,43 +97,19 @@ func _on_body_detection(body: Node2D) -> void:
 func _on_body_detection_exited(body: Node2D) -> void:
 		if body.is_in_group("Enemy"):
 			enemy = null
-			
-
-func _on_area_detection(area: Area2D) -> void:
-	var obj = area.get_parent()
-	if obj.is_in_group("Item"):
-		var item = obj
-		if item.TYPE == "attack":
-			attack += item.BUFF_AMOUNT
-			pickup_label.set_text("+" + str(item.BUFF_AMOUNT) + " attack damage!")
-			pickup_label.show()
-			create_temp_timer(2.0)
-			stats_label.set_text("Attack: " + str(attack) + "\nDefense: " + str(defense))
-			
-		elif item.TYPE == "defense":
-			defense += item.BUFF_AMOUNT
-			pickup_label.set_text("+" + str(item.BUFF_AMOUNT) + " defense!")			
-			pickup_label.show()
-			create_temp_timer(2.0)
-			stats_label.set_text("Attack: " + str(attack) + "\nDefense: " + str(defense))
-		## Adding items to inventory if we want to add items that do more than boost stats
-		#for item in inventory:
-			#if obj.type == item:
-				#inventory[item] += 1
-				#break
-		obj.queue_free()
 
 
 func _on_steal_timeout() -> void:
-	var looted_item = enemy.generate_loot()
-	steal_text.hide()
-	steal_countdown.set_text("STOLEN: " + str(looted_item))
-	create_temp_timer(2.0)
-	
-	for item in inventory:
-		if looted_item == item:
-			inventory[item] += 1
-			break
+	if enemy:
+		var looted_item = enemy.generate_loot()
+		steal_text.hide()
+		steal_countdown.set_text("STOLEN: " + str(looted_item))
+		create_temp_timer(2.0)
+		
+		for item in inventory:
+			if looted_item == item:
+				inventory[item] += 1
+				break
 
 
 func _on_temp_timer_timeout():
@@ -142,6 +119,19 @@ func _on_temp_timer_timeout():
 	pickup_label.hide()
 	temp_timer.queue_free()
 
-func increase_attack(amount: int) -> void:
-	attack += amount
-	print("your attack increased ")
+func increase_stat(amount: int, type: String) -> void:
+	if type == "attack":
+		attack += amount
+		pickup_label.set_text("+" + str(amount) + " attack damage!")
+		pickup_label.show()
+		create_temp_timer(2.0)
+		stats_label.set_text("Attack: " + str(attack) + "\nDefense: " + str(defense))
+		print("your attack increased ")
+		
+	elif type == "defense":
+		defense += amount
+		pickup_label.set_text("+" + str(amount) + " defense!")			
+		pickup_label.show()
+		create_temp_timer(2.0)
+		stats_label.set_text("Attack: " + str(attack) + "\nDefense: " + str(defense))
+		print("your defense increased ")
